@@ -1,41 +1,24 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  Param,
-  Post,
-  Query,
-  Req,
-} from '@nestjs/common';
-import { BodyTestDto } from './dto/body-test-dto/body-test-dto';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { UserDto } from './dto/user-dto/user-dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  @Get()
-  findUser(): string {
-    return 'find user page';
+  constructor(private userService: UsersService) {}
+
+  @Post('insert')
+  insertUser(@Body() userDto: UserDto) {
+    this.userService.insert(userDto);
+    return 'insert 완료';
   }
 
-  @Get('req-headers')
-  reqTest(@Req() req: Request) {
-    console.log(req);
-    return req.headers;
+  @Get('finduser')
+  findOne() {
+    return this.userService.findOne();
   }
 
-  @Get('query-test')
-  queryTest(@Query('name') name: string, @Query('age') age: string) {
-    return { name, age };
-  }
-
-  @Get('param-test/:id/name/:name/age/:age')
-  paramTest(@Param() params) {
-    return params;
-  }
-
-  @Post('body-test')
-  @HttpCode(200)
-  bodyTest(@Body() bodyTestDto: BodyTestDto) {
-    return bodyTestDto;
+  @Get('findUsers')
+  findAll() {
+    return this.userService.findAll();
   }
 }
