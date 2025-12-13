@@ -11,6 +11,6 @@ export class LoggerMiddleware {
 
 export function logger(req: Request, res: Response, next: NextFunction) {
   console.log('function Reqeust....');
-  console.log(req.headers);
+  // console.log(req.headers);
   next();
 }
