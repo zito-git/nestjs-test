@@ -1,12 +1,13 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { logger, LoggerMiddleware } from './middleware/logger.middleware';
+import { AuthModule } from './auth/auth.module';
+import { logger } from './middleware/logger.middleware';
+import { PipeTestModule } from './pipe-test/PipeTest.module';
 import { UsersModule } from './users/users.module';
-import { PipeTestController } from './pipe-test/pipe-test.controller';
 @Module({
-  imports: [UsersModule],
-  controllers: [AppController, PipeTestController],
+  imports: [UsersModule, AuthModule, PipeTestModule],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
